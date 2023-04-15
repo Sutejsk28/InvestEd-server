@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
-
+import validator from "validator";
+import bcrypt from 'bcrypt'
+import jwt from "jsonwebtoken";
 const investorSchema = new mongoose.Schema({
     "email": {
         type: String,
@@ -28,10 +30,10 @@ const investorSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    "Investments": [{
-        type: mongoose.Schema.Types.ObjectId,
+    "Investments": {
+        type: [mongoose.Schema.Types.ObjectId],
         ref: 'Contract'
-    }],
+    },
     "Picture": {
         public_id: String,
         url: String,    
@@ -48,11 +50,33 @@ const investorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    "connection": [{
+    "connections": {
         type: [mongoose.Schema.Types.ObjectId],
-        default: false
-    }]
+        ref: 'Student',
+        default: []
+    }
 });
+
+investorSchema.pre("save", async function (next){
+    if (!this.isModified("password")) return next() 
+    this.password = await bcrypt.hash( this.password, 10);
+  })
+  
+  investorSchema.methods.comparePassword = async function(enteredPassword){
+    return await bcrypt.compare(enteredPassword, this.password)
+  }
+  
+  investorSchema.methods.generateToken = function() {
+    return jwt.sign({
+        _id: this._id,
+    },
+    process.env.JWT_SECRET,
+    {
+        expiresIn: "15d",
+    }
+    )
+  }
+
 
 const Investor = mongoose.model('Investor', investorSchema);
 

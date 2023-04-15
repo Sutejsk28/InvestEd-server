@@ -42,6 +42,18 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    "Goal":{
+        type: String,
+        required: true,
+    },
+    "fundsRaised":{
+        type: Number,
+        required: false,
+    },
+    "balance":{
+        type: Number,
+        required: false,
+    },
     "signature": {
         type: String,
         required: true,
@@ -54,11 +66,15 @@ const studentSchema = new mongoose.Schema({
         public_id: String,
         url: String,    
     },
+    "connections":{
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Invester'
+    },
     "accountNumber": {
         type: String,
         required: true,
     },
-    "isApproved": {
+    "isVerified": {
         type: Boolean,
         default: false
     },

@@ -1,25 +1,62 @@
-export const getInvesters = (req,res) => {
-    res.json({
-        "success": true,
-    })
-}
+import { asyncError } from "../middlewares/error.js"
+import ContractDetails from "../models/contract.js"
+import Investor from "../models/invester.js"
+import Notification from "../models/notification.js"
+import Student from "../models/student.js"
 
-export const getStudents = () => {
-    res.json({
-        "success": true,
-    })
-}
+export const getAllData = asyncError(
+    async (req,res,next) => {
+        const allInvestersData = await Investor.find({})
+        const allStudentsData = await Student.find({})
+    
+        const contracts = await ContractDetails.find({})
+        let totalInvestment = 0;
+        contracts.forEach((ele)=>{
+            totalInvestment += ele.totalInvestment
+        })
+        console.log(totalInvestment);
 
-export const blockUser = () => {
-    res.json({
-        "success": true,
-    })
-}
+        const totalContracts = contracts.length;
+        console.log(totalContracts);
 
-export const verifyUsers = () => {
-    res.json({
-        "success": true,
-    })
-}
+        const totalUser = allInvestersData.length + allStudentsData.length;
+
+        res.status(200).json({
+            allInvestersData,
+            allStudentsData,
+            totalUser,
+            totalInvestment,
+        })
+
+
+    }
+)
+
+export const verifyUser = asyncError(
+    async (req,res,next)=>{
+        const {studentId} = req.body;
+        const student = await Student.findById(studentId) 
+
+        student.isVerified = true;
+
+        await student.save();
+
+        res.status(200).json({
+            "success": true,
+            student,
+        })
+    }
+)
+
+export const getAllNotification = asyncError(
+    async (req,res,next) => {
+        const notifications = Notification.find({});
+
+        res.status(200).json({
+            "success": true,
+            notifications,
+        })
+    }
+)
 
 

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken"
 import User from "../models/user.js"
 import { asyncError } from "./error.js"
 import Student from "../models/student.js"
+import Investor from "../models/invester.js"
 
 export const isAuthenticated = asyncError(
     async (req,res,next) => {
@@ -24,8 +25,9 @@ export const isInvesterAuthenticated = asyncError(
         if(!token) return next(new ErrorHandler("Login to access", 401))
         
         const decodedData = jwt.verify(token, process.env.JWT_SECRET)
-        
-        req.invested = await User.findById(decodedData._id)
+
+        req.invester = await Investor.findById(decodedData._id)
+
         next()
     }
 )

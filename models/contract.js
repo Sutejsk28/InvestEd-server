@@ -27,6 +27,10 @@ const contractDetailsSchema = mongoose.Schema({
         type: Number,
         required: true,
     },
+    "ROI":{
+        type: Number,
+        required: true,
+    },
     "adminApproval": {
         type: Boolean,
         default: false,
@@ -37,6 +41,10 @@ const contractDetailsSchema = mongoose.Schema({
     },
     "studentApproval":{
         type: Boolean,   
+        default: false,
+    },
+    "paid":{
+        type: Boolean,
         default: false,
     },
 

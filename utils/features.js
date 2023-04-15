@@ -2,7 +2,7 @@ import DataURIParser from "datauri/parser.js";
 import path from "path"
 import {createTransport} from "nodemailer"
 
-export const sendStudentToken = (student, res, message, statusCode) => {
+export const sendToken = (student, res, message, statusCode) => {
 
     const token = student.generateToken()
 

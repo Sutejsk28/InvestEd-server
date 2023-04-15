@@ -16,3 +16,9 @@ export const createContract = asyncError(
     
     }
 )
+
+export const payContract = asyncError(
+    async (req,res)=>{
+        
+    }
+)

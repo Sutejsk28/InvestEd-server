@@ -1,7 +1,7 @@
 import { asyncError } from "../middlewares/error.js";
 import User from "../models/user.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
-import { cookieOptions, getDataUri, sendEmail, sendStudentToken } from "../utils/features.js";
+import { cookieOptions, getDataUri, sendEmail, sendToken } from "../utils/features.js";
 import cloudinary from 'cloudinary'
 
 export const login = asyncError(async (req,res,next) => {
@@ -18,7 +18,7 @@ export const login = asyncError(async (req,res,next) => {
     if(!isMatched) 
         return next(new ErrorHandler("Incorrect Email or Password", 400))
     
-    sendStudentToken(user, res, `Welcome Back ${user.name}`, 200)
+    sendToken(user, res, `Welcome Back ${user.name}`, 200)
 }
 )
 
