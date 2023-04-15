@@ -42,7 +42,7 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    "Goal":{
+    "goal":{
         type: String,
         required: true,
     },

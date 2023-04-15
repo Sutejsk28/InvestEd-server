@@ -7,6 +7,12 @@ connectDB()
 
 export const stripe= new Stripe(process.env.STRIPE_API_SECRET)
 
+// import http from 'http'
+// const server = http.createServer(app);
+// import {server} from 'socket.io'
+
+// const io = server()
+
 cloudinary.v2.config({
     cloud_name: process.env.CLOUDINARY_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,

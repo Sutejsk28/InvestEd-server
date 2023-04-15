@@ -104,7 +104,7 @@ export const acceptContract = asyncError(async ()=>{
     const student = req.student;
 })
 
-export const getGoal = asyncError(async ()=>{
+export const getGoal = asyncError(async (req,res)=>{
     const student = req.student;
     const {goal} = student
 
@@ -151,7 +151,8 @@ export const getFunds = asyncError(async ()=>{
 })
 
 export const getAllStudents =asyncError(async (req,res,next) => {
-    const students= Student.find({});
+    const students= await Student.find({});
+
     res.status(200).json({
         "success": true,
         students

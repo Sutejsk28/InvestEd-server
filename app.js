@@ -7,6 +7,7 @@ import user from './routes/user.js'
 import student from './routes/student.js'
 import invester from './routes/invester.js'
 import contract from './routes/contract.js'
+import fraudprediction from './routes/fraudprediction.js'
 
 config({
     path: "./data/config.env"
@@ -27,3 +28,4 @@ app.use("/api/v1/user",user)
 app.use("/api/v1/student",student)
 app.use("/api/v1/invester",invester)
 app.use("/api/v1/contract",contract)
+//app.use("/api/v1/ml",fraudprediction)
